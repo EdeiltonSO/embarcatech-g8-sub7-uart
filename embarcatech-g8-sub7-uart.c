@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <stdio.h> 
 #include "pico/stdlib.h"
 
 // Definição dos GPIOs dos LEDs e do buzzer
