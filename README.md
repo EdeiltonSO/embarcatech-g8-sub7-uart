@@ -103,3 +103,26 @@ Participantes do projeto por ordem alfabética e atividades desenvolvidas:
 
 #### Rogério Silva Palafoz Júnior
 - Responsável pelas configurações iniciais do projeto e menu de ações
+
+## Recursos para versionamento
+
+### Conventional Commits
+
+Conventional Commits seguem uma estrutura fixa como feat, fix, docs e style, o que facilita identificar o escopo das mudanças. Isso ajuda a organizar o histórico e facilita o versionamento (por exemplo, ao definir o número da próxima versão do software).
+
+### Labels no repositório
+
+As labels em pull requests ajudam a identificar o escopo das tarefas. Nesse projeto, utilizamos:
+
+- `bugfix`: para correção de bugs
+- `documentação`: para indicar melhorias ou inclusões na documentação
+- `readonly`: para indicar informação ou histórico
+- `novidade`: para indicar a implementação de uma nova feature
+
+### Branches nomeadas segundo o escopo
+
+A nomeação de branches como `feature/...`, `docs/...` ou `bugfix/...` organiza o fluxo de trabalho e indica o propósito da branch, facilitando o entendimento. Portanto, foi um recurso adotado durante o desenvolvimento do projeto.
+
+### Diretivas de pré-processamento
+
+Neste projeto, utilizamos as diretivas para definir os pinos associados aos LEDs e ao buzzer. Os LEDs verde, azul e vermelho estão configurados nos pinos 11, 12 e 13, respectivamente, enquanto o buzzer está conectado ao pino 21. Isso facilita identificar e alterar pinos conforme necessário.
