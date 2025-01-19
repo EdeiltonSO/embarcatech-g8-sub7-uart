@@ -1,10 +1,6 @@
-# Controlando LEDs e buzzer via comunicação serial com o RP2040
+# Controlando LEDs e buzzer via comunicação serial UART com o RP2040
 
-Software escrito em C para controlar pinos GPIO do RP2040 na placa de desenvolvimento Raspberry Pi Pico W por meio de comunicação serial UART.
-
-# Controle de LEDs e Buzzer - Raspberry Pi Pico
-
-Este projeto foi desenvolvido para controlar LEDs e um buzzer utilizando o microcontrolador **Raspberry Pi Pico**. Através de comandos inseridos via terminal, o usuário pode acionar diferentes funcionalidades, como ligar e desligar LEDs e emitir sons com o buzzer.
+Este projeto foi desenvolvido para controlar LEDs e um buzzer utilizando o microcontrolador **Raspberry Pi Pico**. Por meio de comunicação serial UART feita através de comandos inseridos via terminal, o usuário pode acionar diferentes funcionalidades, como ligar e desligar LEDs e emitir sons com o buzzer.
 
 ## Funcionalidades
 
