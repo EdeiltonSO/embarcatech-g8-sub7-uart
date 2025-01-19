@@ -1,0 +1,83 @@
+{
+    "version": 1,
+    "author": "Cibelle Sousa Rodrigues, Edeilton Da Silva De Oliveira, Edemir De Carvalho Rodrigues, Gustavo Oliveira Alves, Joabis Oliveira Dos Santos Júnior, Rogerio Silva Palafoz Junior",
+    "editor": "wokwi",
+    "parts": [
+      {
+        "type": "wokwi-pi-pico",
+        "id": "pico",
+        "top": 102.45,
+        "left": 147.6,
+        "attrs": { "builder": "pico-sdk" }
+      },
+      {
+        "type": "wokwi-led",
+        "id": "led1",
+        "top": 111.6,
+        "left": -92.2,
+        "rotate": 270,
+        "attrs": { "color": "green" }
+      },
+      {
+        "type": "wokwi-led",
+        "id": "led2",
+        "top": 178.8,
+        "left": -92.2,
+        "rotate": 270,
+        "attrs": { "color": "blue" }
+      },
+      {
+        "type": "wokwi-led",
+        "id": "led3",
+        "top": 248,
+        "left": -92.2,
+        "rotate": 270,
+        "attrs": { "color": "red" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r1",
+        "top": 136,
+        "left": -30.2,
+        "rotate": 180,
+        "attrs": { "value": "1000" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r2",
+        "top": 203,
+        "left": -30.2,
+        "rotate": 180,
+        "attrs": { "value": "1000" }
+      },
+      {
+        "type": "wokwi-resistor",
+        "id": "r3",
+        "top": 273,
+        "left": -30.2,
+        "rotate": 180,
+        "attrs": { "value": "1000" }
+      },
+      {
+        "type": "wokwi-buzzer",
+        "id": "bz1",
+        "top": 136.8,
+        "left": 298,
+        "attrs": { "volume": "0.1" }
+      }
+    ],
+    "connections": [
+      [ "r1:1", "r2:1", "black", [ "v0" ] ],
+      [ "r2:1", "r3:1", "black", [ "v0" ] ],
+      [ "r3:1", "pico:GND.4", "black", [ "v0" ] ],
+      [ "led1:C", "r1:2", "green", [ "h0" ] ],
+      [ "led2:C", "r2:2", "blue", [ "h0" ] ],
+      [ "led3:C", "r3:2", "red", [ "h0" ] ],
+      [ "led1:A", "pico:GP11", "green", [ "h189.6", "v118" ] ],
+      [ "led2:A", "pico:GP12", "blue", [ "h180", "v2.8" ] ],
+      [ "led3:A", "pico:GP13", "red", [ "h0" ] ],
+      [ "pico:GND.6", "bz1:1", "black", [ "h0" ] ],
+      [ "pico:GP21", "bz1:2", "red", [ "h0" ] ]
+    ],
+    "dependencies": {}
+  }
