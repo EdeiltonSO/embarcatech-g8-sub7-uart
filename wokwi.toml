@@ -1,0 +1,4 @@
+[wokwi]
+version = 1
+firmware = "embarcatech-g8-sub7-uart.uf2"
+elf = "embarcatech-g8-sub7-uart.elf"
