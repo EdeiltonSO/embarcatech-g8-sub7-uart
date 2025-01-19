@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/watchdog.h"
-#include "pico/bootrom.h" // Biblioteca necessária para reset_usb_boot
 #include <string.h>
 
 // Diretivas para pinos GPIO dos LEDs e do buzzer
@@ -69,7 +68,6 @@ void reset_peripherals() {
     gpio_put(GPIO_LED_AZUL, 0);
     gpio_put(GPIO_LED_VERMELHO, 0);
     gpio_put(GPIO_BUZZER, 0);
-    sleep_ms(100); // Aguardando estado estável antes do próximo comando
 }
 
 // Executa a ação correspondente ao comando do usuário
@@ -117,11 +115,9 @@ void actions(int *input) {
     case MODO_BOOTSEL_CMD:
         // Desativa todos os periféricos antes de reiniciar
         reset_peripherals();
-        puts("\nTodos os periféricos desativados. Entrando em modo BOOTSEL...\n");
-        
-        // Reinicia no modo BOOTSEL
-        sleep_ms(500); // Aguarda estado estável antes do reset
-        reset_usb_boot(0, 0); // Reinicia diretamente no modo BOOTSEL
+        puts("\nTodos os periféricos desativados. Reiniciando em modo BOOTSEL em 1 segundo.\n");
+        sleep_ms(1000);
+        watchdog_reboot(0, 0, 0); // Reinicia o microcontrolador
         break;
 
     default:
