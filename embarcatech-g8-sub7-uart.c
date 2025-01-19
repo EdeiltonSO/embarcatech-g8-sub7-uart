@@ -1,5 +1,6 @@
 #include <stdio.h> 
 #include "pico/stdlib.h"
+#include "hardware/watchdog.h"
 
 // Diretivas para pinos GPIO dos LEDs e do buzzer
 #define GPIO_LED_VERDE 11
