@@ -1,6 +1,7 @@
-#include <stdio.h> 
+#include <stdio.h>
 #include "pico/stdlib.h"
 #include "hardware/watchdog.h"
+#include <string.h>
 
 // Diretivas para pinos GPIO dos LEDs e do buzzer
 #define GPIO_LED_VERDE 11
@@ -20,21 +21,31 @@ const int LED_VERMELHO_CMD = 1,
 // Protótipos das funções
 void actions(int *input);
 void init_peripherals();
+void reset_peripherals();
 
 int main() {
-    stdio_init_all();
-    init_peripherals();
+    stdio_init_all(); // Inicializa a comunicação serial
+    init_peripherals(); // Configura os pinos GPIO dos LEDs e do buzzer
 
     while (true) {
-        puts("Digite a operação desejada:\n1 - Acender o LED vermelho\n2 - Acender o LED verde\n3 - Acender o LED azul\n4 - Acender todos os LEDs\n5 - Apagar todos os LEDs\n6 - Emite um som do buzzer\n7 - Entrar em modo BOOTSEL\r");
+        puts("Digite a operação desejada:\n"
+             "1 - Acender o LED vermelho\n"
+             "2 - Acender o LED verde\n"
+             "3 - Acender o LED azul\n"
+             "4 - Acender todos os LEDs\n"
+             "5 - Apagar todos os LEDs\n"
+             "6 - Emitir um som do buzzer\n"
+             "7 - Entrar em modo BOOTSEL\n");
         int input = 0;
-        if (scanf("%d", &input) != 0) {
-            actions(&input);
+        if (scanf("%d", &input) == 1) {
+            actions(&input); // Executa a ação correspondente
+        } else {
+            puts("\nERRO: Entrada inválida. Por favor, insira um número válido.\n");
         }
     }
 }
 
-// Inicializa (e seta pra off) pinos dos LEDs e do buzzer
+// Inicializa os pinos GPIO dos LEDs e do buzzer
 void init_peripherals() {
     gpio_init(GPIO_LED_VERDE);
     gpio_set_dir(GPIO_LED_VERDE, GPIO_OUT);
@@ -48,35 +59,35 @@ void init_peripherals() {
     gpio_init(GPIO_BUZZER);
     gpio_set_dir(GPIO_BUZZER, GPIO_OUT);
 
+    reset_peripherals(); // Garante que todos os periféricos começam desligados
+}
+
+// Reseta os periféricos (desliga todos os LEDs e o buzzer)
+void reset_peripherals() {
     gpio_put(GPIO_LED_VERDE, 0);
     gpio_put(GPIO_LED_AZUL, 0);
     gpio_put(GPIO_LED_VERMELHO, 0);
     gpio_put(GPIO_BUZZER, 0);
 }
 
+// Executa a ação correspondente ao comando do usuário
 void actions(int *input) {
     switch (*input) {
     case LED_VERMELHO_CMD:
-        // Liga o LED vermelho e desliga os demais
-        gpio_put(GPIO_LED_VERDE, 0);
-        gpio_put(GPIO_LED_AZUL, 0);
-        gpio_put(GPIO_LED_VERMELHO, 1);
+        reset_peripherals(); // Desliga outros LEDs
+        gpio_put(GPIO_LED_VERMELHO, 1); // Liga o LED vermelho
         puts("\nLED vermelho ligado\n");
         break;
 
     case LED_VERDE_CMD:
-        // Liga o LED verde e desliga os demais
-        gpio_put(GPIO_LED_VERDE, 1);
-        gpio_put(GPIO_LED_AZUL, 0);
-        gpio_put(GPIO_LED_VERMELHO, 0);
+        reset_peripherals(); // Desliga outros LEDs
+        gpio_put(GPIO_LED_VERDE, 1); // Liga o LED verde
         puts("\nLED verde ligado\n");
         break;
 
     case LED_AZUL_CMD:
-        // Liga o LED azul e desliga os demais
-        gpio_put(GPIO_LED_VERDE, 0);
-        gpio_put(GPIO_LED_AZUL, 1);
-        gpio_put(GPIO_LED_VERMELHO, 0);
+        reset_peripherals(); // Desliga outros LEDs
+        gpio_put(GPIO_LED_AZUL, 1); // Liga o LED azul
         puts("\nLED azul ligado\n");
         break;
 
@@ -89,10 +100,7 @@ void actions(int *input) {
         break;
 
     case LED_DESLIGAR_TODOS_CMD:
-        // Desliga todos os LEDs
-        gpio_put(GPIO_LED_VERDE, 0);
-        gpio_put(GPIO_LED_AZUL, 0);
-        gpio_put(GPIO_LED_VERMELHO, 0);
+        reset_peripherals(); // Desliga todos os LEDs
         puts("\nTodos os LEDs desligados\n");
         break;
 
@@ -105,8 +113,9 @@ void actions(int *input) {
         break;
 
     case MODO_BOOTSEL_CMD:
-        // Reinicia em modo BOOTSEL
-        puts("\nReiniciando em modo BOOTSEL em 1 segundo\n");
+        // Desativa todos os periféricos antes de reiniciar
+        reset_peripherals();
+        puts("\nTodos os periféricos desativados. Reiniciando em modo BOOTSEL em 1 segundo.\n");
         sleep_ms(1000);
         watchdog_reboot(0, 0, 0); // Reinicia o microcontrolador
         break;
